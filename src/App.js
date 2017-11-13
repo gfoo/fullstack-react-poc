@@ -33,12 +33,14 @@ class App extends React.Component {
             <br/>
             cat prop='{this.props.cat}'
             <br/>
-            <input type="text" onChange={this.update.bind(this)}/>
+            <Widget update={this.update.bind(this)}/>
             txt4 prop='{this.state.txt4}'
             <br/>
             txt5 prop='{this.state.txt5}'
             <br/>
             <b>Bold</b>
+            <br/>
+            <Button>I <Heart/> React</Button>
             </div>
             )
     }
@@ -51,6 +53,18 @@ App.propTypes = {
 
 App.defaultProps = {
     txt3: "default value"
+}
+
+const Widget = (props) => 
+    <input type="text" onChange={props.update}/>
+
+const Button = (props) => 
+    <button>{props.children}</button>
+
+class Heart extends React.Component {
+    render() {
+        return <span>&hearts;</span>
+    }
 }
 
 export default App
