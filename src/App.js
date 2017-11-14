@@ -9,21 +9,29 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            txt4: "this is state txt4",
-            txt5: "this is state txt5",
+            currentEvent: '---',
         }
-
+        this.update = this.update.bind(this)
     }
 
     update(e) {
-        this.setState({txt4: e.target.value})
+        this.setState(
+            {currentEvent: e.type})
     }
 
     render() {
         let txt2 = "prop value txt2"
         return (
             <div>
-            <h1>Hi 3 </h1>
+            <Title text="12345678"/>
+            <br/>
+            <textarea onKeyPress={this.update}
+                      onCopy={this.update}
+                      onFocus={this.update}
+                      onBlur={this.update}
+                      cols="30" 
+                      rows="10" />
+            <h1>{this.state.currentEvent}</h1>
             <br/>
             txt prop='{this.props.txt}' 
             <br/>
@@ -32,11 +40,6 @@ class App extends React.Component {
             txt3 prop='{this.props.txt3}' 
             <br/>
             cat prop='{this.props.cat}'
-            <br/>
-            <Widget update={this.update.bind(this)}/>
-            txt4 prop='{this.state.txt4}'
-            <br/>
-            txt5 prop='{this.state.txt5}'
             <br/>
             <b>Bold</b>
             <br/>
@@ -53,6 +56,21 @@ App.propTypes = {
 
 App.defaultProps = {
     txt3: "default value"
+}
+
+
+const Title = (props) => 
+    <h1>Hi 3 props.text='{props.text}' </h1>
+
+Title.propTypes = {
+    text(props,propName,component) {
+        if(!(propName in props)) {
+            return new Error('missing ${propName}')
+        }
+        if(props[propName].length < 6) {
+            return new Error('${propName} was too short')
+        }
+    } 
 }
 
 const Widget = (props) => 
